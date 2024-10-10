@@ -35,7 +35,7 @@ class Journal
 
     private Random random = new Random();
 
-    // Write a new entry
+    // Writing a new entry
     public void WriteEntry()
     {
         string prompt = prompts[random.Next(prompts.Count)];
@@ -63,7 +63,7 @@ class Journal
         }
     }
 
-    // Save the journal to a file
+    // Saving the journal to a file
     public void SaveJournal()
     {
         Console.Write("Enter a filename to save the journal: ");
@@ -79,7 +79,7 @@ class Journal
         Console.WriteLine("Journal saved!\n");
     }
 
-    // Load the journal from a file
+    // Loading the journal from a file
     public void LoadJournal()
     {
         Console.Write("Enter the filename to load the journal: ");
