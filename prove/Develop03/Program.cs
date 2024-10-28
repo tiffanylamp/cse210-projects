@@ -6,7 +6,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Library of scriptures 
+        
         List<Scripture> scriptures = new List<Scripture>
         {
             new Scripture(new Reference("1 Nephi", 3, 7), "I will go and do the things which the Lord hath commanded, for I know that the Lord giveth no commandments unto the children of men, save he shall prepare a way for them that they may accomplish the thing which he commandeth them."),
@@ -16,14 +16,14 @@ class Program
             new Scripture(new Reference("Moroni", 10, 4, 5), "And when ye shall receive these things, I would exhort you that ye would ask God, the Eternal Father, in the name of Christ, if these things are not true; and if ye shall ask with a sincere heart, with real intent, having faith in Christ, he will manifest the truth of it unto you, by the power of the Holy Ghost.")
         };
 
-        // Select a random scripture 
+        
         Random random = new Random();
         Scripture selectedScripture = scriptures[random.Next(scriptures.Count)];
 
         while (true)
         {
             Console.Clear();
-            selectedScripture.Display();
+            selectedScripture.DisplayScripture();
 
             Console.WriteLine("\nPress Enter to hide some words or type 'quit' to end.");
             string input = Console.ReadLine().ToLower();
@@ -34,14 +34,13 @@ class Program
             }
             else
             {
-                // Hide 
+                
                 selectedScripture.HideRandomWords(3);
 
-                // Check if all words are hidden
                 if (selectedScripture.AllWordsHidden())
                 {
                     Console.Clear();
-                    Console.WriteLine("All words are hidden. Well done!  You're doing great\n");
+                    Console.WriteLine("All words are hidden. Well done!\n");
                     break;
                 }
             }
@@ -49,15 +48,12 @@ class Program
     }
 }
 
-//Scripture reference, including book name and verses
 class Reference
 {
     private string book;
     private int chapter;
     private int startVerse;
     private int? endVerse; 
-
-    // Constructor for single verse references (e.g., 1 Nephi 3:7)
     public Reference(string book, int chapter, int verse)
     {
         this.book = book;
@@ -66,7 +62,7 @@ class Reference
         this.endVerse = null;
     }
 
-    // Constructor for multiple verse references (e.g., Alma 37:6-7)
+   
     public Reference(string book, int chapter, int startVerse, int endVerse)
     {
         this.book = book;
@@ -75,7 +71,7 @@ class Reference
         this.endVerse = endVerse;
     }
 
-    public override string ToString()
+    public string GetReferenceString()
     {
         if (endVerse == null)
             return $"{book} {chapter}:{startVerse}";
@@ -84,7 +80,6 @@ class Reference
     }
 }
 
-// An individual word in the scripture
 class Word
 {
     private string text;
@@ -106,13 +101,12 @@ class Word
         return isHidden;
     }
 
-    public override string ToString()
+    public string GetWordText()
     {
         return isHidden ? "_____" : text;
     }
 }
 
-// Scripture, including the text and its reference
 class Scripture
 {
     private Reference reference;
@@ -124,18 +118,16 @@ class Scripture
         words = text.Split(' ').Select(word => new Word(word)).ToList();
     }
 
-    // Display the scripture text with the hidden words
-    public void Display()
+    public void DisplayScripture()
     {
-        Console.WriteLine(reference);
+        Console.WriteLine(reference.GetReferenceString());
         foreach (Word word in words)
         {
-            Console.Write(word + " ");
+            Console.Write(word.GetWordText() + " ");
         }
         Console.WriteLine();
     }
 
-    // Hide a random set of words in the scripture
     public void HideRandomWords(int count)
     {
         Random random = new Random();
@@ -153,7 +145,6 @@ class Scripture
         }
     }
 
-    // To check if all words are hidden
     public bool AllWordsHidden()
     {
         return words.All(word => word.IsHidden());
