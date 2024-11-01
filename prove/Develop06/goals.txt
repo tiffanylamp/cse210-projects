@@ -1,0 +1,3 @@
+SimpleGoal,Run a marathon,1000,True
+EternalGoal,Read scriptures daily,100
+ChecklistGoal,Attend the temple,50,1,10,500
